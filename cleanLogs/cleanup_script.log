@@ -1,0 +1,37 @@
+2025-11-12 17:32:35 - === SCRIPT DE LIMPIEZA DE LOGS (TEST) ===
+2025-11-12 17:32:35 - Error: Directorio ./test_logs no existe
+2025-11-12 17:36:05 - === SCRIPT DE LIMPIEZA DE LOGS (TEST) ===
+2025-11-12 17:36:05 - Directorio de backup creado: ./backup/logs
+2025-11-12 17:36:05 - === INICIO DE LIMPIEZA ===
+2025-11-12 17:36:05 - Directorio de logs: ./test_logs
+2025-11-12 17:36:05 - Días de retención: 7
+2025-11-12 17:36:05 - Archivos encontrados antes de limpieza:
+2025-11-12 17:36:05 -   - ./test_logs/very_old.log (2025-10-23)
+2025-11-12 17:36:05 -   - ./test_logs/nginx.log (2025-11-12)
+2025-11-12 17:36:05 -   - ./test_logs/error.log (2025-11-10)
+2025-11-12 17:36:05 -   - ./test_logs/old_error.log (2025-11-02)
+2025-11-12 17:36:05 -   - ./test_logs/system.log (2025-11-12)
+2025-11-12 17:36:05 -   - ./test_logs/old_app.log (2025-11-02)
+2025-11-12 17:36:05 -   - ./test_logs/access.log (2025-11-10)
+2025-11-12 17:36:05 -   - ./test_logs/app.log (2025-11-10)
+2025-11-12 17:36:05 - Procesando: ./test_logs/very_old.log
+2025-11-12 17:36:05 - ✓ Comprimido: ./backup/logs/very_old.log_20251112_173605.tar.gz (4.0K)
+2025-11-12 17:36:05 - ✓ Eliminado original: ./test_logs/very_old.log
+2025-11-12 17:36:05 - Procesando: ./test_logs/old_error.log
+2025-11-12 17:36:05 - ✓ Comprimido: ./backup/logs/old_error.log_20251112_173605.tar.gz (4.0K)
+2025-11-12 17:36:05 - ✓ Eliminado original: ./test_logs/old_error.log
+2025-11-12 17:36:05 - Procesando: ./test_logs/old_app.log
+2025-11-12 17:36:05 - ✓ Comprimido: ./backup/logs/old_app.log_20251112_173605.tar.gz (4.0K)
+2025-11-12 17:36:05 - ✓ Eliminado original: ./test_logs/old_app.log
+2025-11-12 17:36:05 - Limpieza completada. Archivos procesados: 0, Comprimidos: 0
+2025-11-12 17:36:05 - Archivos restantes después de limpieza:
+2025-11-12 17:36:05 -   - ./test_logs/nginx.log
+2025-11-12 17:36:05 -   - ./test_logs/error.log
+2025-11-12 17:36:05 -   - ./test_logs/system.log
+2025-11-12 17:36:05 -   - ./test_logs/access.log
+2025-11-12 17:36:05 -   - ./test_logs/app.log
+2025-11-12 17:36:05 - Archivos en backup:
+2025-11-12 17:36:05 -   - ./backup/logs/very_old.log_20251112_173605.tar.gz (4.0K)
+2025-11-12 17:36:05 -   - ./backup/logs/old_app.log_20251112_173605.tar.gz (4.0K)
+2025-11-12 17:36:05 -   - ./backup/logs/old_error.log_20251112_173605.tar.gz (4.0K)
+2025-11-12 17:36:05 - === FIN DEL SCRIPT ===
