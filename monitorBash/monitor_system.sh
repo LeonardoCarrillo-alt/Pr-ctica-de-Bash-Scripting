@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# Colores para la salida en terminal
+# Colores
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Límites de alerta (puedes modificarlos)
+# Límites modificables
 CPU_LIMIT=80
 RAM_LIMIT=80
 DISK_LIMIT=80
 
-# Archivos de log
+# logs
 ALERTS_LOG="alerts.log"
 METRICS_LOG="metrics_$(date +%Y%m%d).log"
 
@@ -53,7 +53,7 @@ send_alert() {
     echo "Alerta registrada: $message"
 }
 
-# Función para obtener uso de CPU en macOS
+# Función para obtener uso de CPU
 get_cpu_usage() {
     # Usamos 'top' para obtener el uso de CPU
     local cpu_usage=$(top -l 1 | grep "CPU usage" | awk '{print $3}' | sed 's/%//')
@@ -62,7 +62,7 @@ get_cpu_usage() {
     echo "$cpu_usage"
 }
 
-# Función para obtener uso de RAM en macOS
+# Función para obtener uso de RAM
 get_ram_usage() {
     # Usamos 'vm_stat' para calcular uso de memoria
     local total_mem=$(sysctl -n hw.memsize)
@@ -124,7 +124,7 @@ monitor_system() {
 
 # Función para monitoreo continuo
 monitor_continuous() {
-    local interval=${1:-5} # Intervalo en segundos (default: 5)
+    local interval=${1:-5} 
     echo "Iniciando monitoreo continuo cada ${interval}s (Ctrl+C para detener)"
     
     while true; do
