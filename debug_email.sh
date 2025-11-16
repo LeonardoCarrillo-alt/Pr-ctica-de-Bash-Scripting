@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "🔍 INICIANDO DIAGNÓSTICO COMPLETO"
-echo "=================================="
 
 SERVICE_NAME="nginx"
 EMAIL_TO="leo.c.c.zubieta@gmail.com"
@@ -80,5 +78,3 @@ echo "   • Espera 1-2 minutos (puede haber delay)"
 echo "   • Revisa el log de msmtp: cat ~/.msmtp.log"
 
 echo ""
-echo "=================================="
-echo "🔍 DIAGNÓSTICO COMPLETADO"

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Script: deploy_app_macos_advanced.sh
-# Descripción: Sistema CI/CD con notificaciones Discord y control de errores
-# Autor: Leonardo Carlos Carrillo Zubieta
-
 # Configuración
 REPO_URL="https://github.com/rayner-villalba-coderoad-com/clash-of-clan"
 DEPLOY_DIR="./deployed_app"
@@ -60,22 +56,22 @@ send_discord_notification() {
     local embed_data=$(cat << EOF
 {
   "embeds": [{
-    "title": "🚀 Despliegue Automático",
+    "title": "Despliegue Automático",
     "description": "$message",
     "color": $color,
     "fields": [
       {
-        "name": "📦 Repositorio",
+        "name": "Repositorio",
         "value": "$(basename $REPO_URL)",
         "inline": true
       },
       {
-        "name": "🔧 Estado",
+        "name": "Estado",
         "value": "$status",
         "inline": true
       },
       {
-        "name": "⏰ Duración",
+        "name": "Duración",
         "value": "$(($(date +%s) - $SCRIPT_START_TIME)) segundos",
         "inline": true
       }
@@ -101,7 +97,7 @@ EOF
 # Función para notificar inicio de despliegue
 notify_deployment_start() {
     log "INFO" "Enviando notificación de inicio a Discord..."
-    send_discord_notification "🟡 INICIANDO" "El proceso de despliegue ha comenzado" 16776960
+    send_discord_notification "INICIANDO" "El proceso de despliegue ha comenzado" 16776960
 }
 
 # Función para notificar éxito
@@ -111,7 +107,7 @@ notify_deployment_success() {
     log "INFO" "Enviando notificación de éxito a Discord..."
     
     local message="Despliegue completado exitosamente\n📊 Archivos: $file_count\n📝 Commit: $commit_msg"
-    send_discord_notification "🟢 EXITOSO" "$message" 65280
+    send_discord_notification "EXITOSO" "$message" 65280
 }
 
 # Función para notificar error
@@ -120,14 +116,14 @@ notify_deployment_error() {
     local step=$2
     log "ERROR" "Enviando notificación de error a Discord..."
     
-    local message="Error en paso: $step\n❌ Error: $error_msg"
-    send_discord_notification "🔴 FALLIDO" "$message" 16711680
+    local message="Error en paso: $step\nError: $error_msg"
+    send_discord_notification "FALLIDO" "$message" 16711680
 }
 
 # Función para notificar sin cambios
 notify_no_changes() {
     log "INFO" "Enviando notificación sin cambios a Discord..."
-    send_discord_notification "🟡 SIN CAMBIOS" "No hay cambios nuevos en el repositorio" 16776960
+    send_discord_notification "SIN CAMBIOS" "No hay cambios nuevos en el repositorio" 16776960
 }
 
 # Función de limpieza en caso de error
@@ -152,7 +148,6 @@ cleanup_on_error() {
     exit 1
 }
 
-# Función para verificar comandos críticos
 check_critical_command() {
     local cmd=$1
     local error_msg=$2
@@ -162,7 +157,6 @@ check_critical_command() {
     fi
 }
 
-# Función para inicializar directorios
 setup_directories() {
     log "INFO" "Configurando directorios de despliegue..."
     
@@ -173,7 +167,6 @@ setup_directories() {
     log "SUCCESS" "Directorios configurados correctamente"
 }
 
-# Función para crear backup del despliegue actual
 create_backup() {
     if [ -d "$DEPLOY_DIR" ] && [ "$(ls -A "$DEPLOY_DIR" 2>/dev/null)" ]; then
         local backup_name="backup_$(date +%Y%m%d_%H%M%S)"
@@ -193,7 +186,6 @@ create_backup() {
     fi
 }
 
-# Función para clonar o actualizar el repositorio con control de errores
 update_repository() {
     log "INFO" "Verificando repositorio..."
     
@@ -202,10 +194,8 @@ update_repository() {
         
         cd "$DEPLOY_DIR" || cleanup_on_error "update_repository" "No se pudo acceder al directorio de despliegue"
         
-        # Guardar el commit actual para comparar
         local old_commit=$(git rev-parse HEAD 2>/dev/null)
         
-        # Pull de los últimos cambios con control de errores
         if git fetch origin main 2>> "../$LOG_FILE"; then
             if git pull origin main 2>> "../$LOG_FILE"; then
                 local new_commit=$(git rev-parse HEAD)
@@ -241,18 +231,15 @@ update_repository() {
     fi
 }
 
-# Función para verificar dependencias (macOS)
 check_dependencies() {
     log "INFO" "Verificando dependencias en macOS..."
     
     local missing_deps=()
     
-    # Verificar Git (crítico)
     if ! command -v git &> /dev/null; then
         cleanup_on_error "check_dependencies" "Git no está instalado. Es requerido."
     fi
     
-    # Verificar curl (para Discord)
     if ! command -v curl &> /dev/null; then
         log "WARNING" "Curl no está instalado. No se enviarán notificaciones a Discord."
     fi
@@ -261,13 +248,12 @@ check_dependencies() {
     return 0
 }
 
-# Función para simular reinicio de servicios en macOS
 restart_services_macos() {
     log "INFO" "Simulando reinicio de servicios en macOS..."
     
     # Detectar tipo de aplicación y simular reinicio apropiado
     if [ -f "$DEPLOY_DIR/package.json" ]; then
-        log "INFO" "📦 Aplicación Node.js detectada"
+        log "INFO" "Aplicación Node.js detectada"
         
         # Intentar instalar dependencias
         if [ -f "$DEPLOY_DIR/package.json" ]; then
@@ -282,7 +268,7 @@ restart_services_macos() {
         fi
         
     elif [ -f "$DEPLOY_DIR/requirements.txt" ]; then
-        log "INFO" "🐍 Aplicación Python detectada"
+        log "INFO" "Aplicación Python detectada"
         
         # Intentar instalar dependencias Python
         if [ -f "$DEPLOY_DIR/requirements.txt" ]; then
@@ -297,11 +283,11 @@ restart_services_macos() {
         fi
         
     elif [ -f "$DEPLOY_DIR/index.html" ]; then
-        log "INFO" "🌐 Aplicación Web estática detectada"
+        log "INFO" "Aplicación Web estática detectada"
         log "SUCCESS" "Aplicación web lista para servir"
         
     else
-        log "INFO" "📁 Proyecto genérico detectado"
+        log "INFO" "Proyecto genérico detectado"
     fi
     
     # Simular "reinicio" creando un archivo de timestamp
@@ -326,10 +312,9 @@ verify_deployment() {
     local dir_count=$(find "$DEPLOY_DIR" -type d 2>/dev/null | wc -l | tr -d ' ')
     
     log "INFO" "Estadísticas del despliegue:"
-    log "INFO" "  📂 Directorios: $dir_count"
-    log "INFO" "  📄 Archivos: $file_count"
+    log "INFO" "  Directorios: $dir_count"
+    log "INFO" "  Archivos: $file_count"
     
-    # Verificar que el repositorio git está intacto
     if [ ! -d "$DEPLOY_DIR/.git" ]; then
         log "WARNING" "Directorio .git no encontrado después del despliegue"
     fi
@@ -341,12 +326,12 @@ verify_deployment() {
 # Función para mostrar resumen final
 show_summary() {
     local file_count=$1
-    log "INFO" "=== 📊 RESUMEN FINAL DEL DESPLIEGUE ==="
-    log "INFO" "📍 Directorio: $(pwd)/$DEPLOY_DIR"
-    log "INFO" "📂 Total archivos: $file_count"
-    log "INFO" "🕐 Duración: $(($(date +%s) - $SCRIPT_START_TIME)) segundos"
-    log "INFO" "📝 Log completo: $LOG_FILE"
-    log "INFO" "🔔 Notificaciones: Discord"
+    log "INFO" "=== RESUMEN FINAL DEL DESPLIEGUE ==="
+    log "INFO" "Directorio: $(pwd)/$DEPLOY_DIR"
+    log "INFO" "Total archivos: $file_count"
+    log "INFO" "Duración: $(($(date +%s) - $SCRIPT_START_TIME)) segundos"
+    log "INFO" "Log completo: $LOG_FILE"
+    log "INFO" "Notificaciones: Discord"
     log "INFO" "========================================"
 }
 
@@ -356,7 +341,7 @@ main() {
     
     trap 'cleanup_on_error "script_interrupt" "Script interrumpido por el usuario"' INT TERM
     
-    log "INFO" "🚀 INICIANDO PROCESO DE DESPLIEGUE AVANZADO"
+    log "INFO" "INICIANDO PROCESO DE DESPLIEGUE AVANZADO"
     log "INFO" "Repositorio: $REPO_URL"
     
     # Paso 1: Notificar inicio

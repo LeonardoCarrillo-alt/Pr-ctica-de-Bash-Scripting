@@ -1,7 +1,7 @@
 #!/bin/bash
 # setup_discord_webhook.sh
 
-echo "🔧 Configuración de Webhook de Discord"
+echo "Configuración de Webhook de Discord"
 echo "======================================"
 
 # Solicitar webhook URL
@@ -16,8 +16,8 @@ fi
 sed -i '' "s|DISCORD_WEBHOOK_URL=.*|DISCORD_WEBHOOK_URL=\"$webhook_url\"|" deploy_app.sh
 
 echo "✅ Webhook configurado correctamente"
-echo "📝 URL: $webhook_url"
+echo "URL: $webhook_url"
 
 # Probar el webhook
-echo "🧪 Probando webhook..."
+echo "Probando webhook..."
 ./deploy_app.sh --test-webhook

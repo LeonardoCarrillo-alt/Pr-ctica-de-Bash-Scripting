@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Verificar que se haya proporcionado un parámetro
 if [ $# -eq 0 ]; then
     echo "Error: Debes proporcionar el nombre del servicio como parámetro."
     echo "Uso: ./check_service.sh <nombre-del-servicio>"
@@ -14,7 +13,7 @@ TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 EMAIL_TO="leo.c.c.zubieta@gmail.com"
 HOSTNAME=$(hostname)
 
-echo "🔍 Monitoreando servicio: $SERVICE_NAME"
+echo "Monitoreando servicio: $SERVICE_NAME"
 
 # Verificar si brew está disponible
 if ! command -v brew &> /dev/null; then
